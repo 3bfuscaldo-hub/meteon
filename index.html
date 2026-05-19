@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>METEON - Previsioni Meteo Italiana</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="logo">🌍 METEON</h1>
+                <p class="tagline">Le tue previsioni meteo in tempo reale</p>
+            </div>
+        </header>
+
+        <!-- Search Bar -->
+        <div class="search-container">
+            <div class="search-box">
+                <input 
+                    type="text" 
+                    id="cityInput" 
+                    placeholder="Cerca una città italiana..." 
+                    class="search-input"
+                    autocomplete="off"
+                >
+                <button class="search-btn" onclick="searchCity()">🔍</button>
+            </div>
+            <ul class="suggestions" id="suggestions"></ul>
+        </div>
+
+        <!-- Loading Spinner -->
+        <div class="loader" id="loader"></div>
+
+        <!-- Error Message -->
+        <div class="error" id="error"></div>
+
+        <!-- Current Weather Section -->
+        <section class="weather-section" id="currentWeather" style="display: none;">
+            <div class="weather-header">
+                <h2 id="cityName"></h2>
+                <p id="date"></p>
+            </div>
+            
+            <div class="current-weather">
+                <div class="weather-main">
+                    <img id="weatherIcon" src="" alt="Icona meteo" class="weather-icon">
+                    <div class="temperature-info">
+                        <div class="temp-display">
+                            <span id="temperature" class="temperature"></span>
+                            <span class="degree">°C</span>
+                        </div>
+                        <p id="weatherDescription" class="description"></p>
+                    </div>
+                </div>
+                
+                <div class="weather-details-grid">
+                    <div class="detail-card">
+                        <span class="detail-icon">🌡️</span>
+                        <span class="detail-label">Percepita</span>
+                        <span id="feelsLike" class="detail-value">--°C</span>
+                    </div>
+                    <div class="detail-card">
+                        <span class="detail-icon">💨</span>
+                        <span class="detail-label">Vento</span>
+                        <span id="windSpeed" class="detail-value">-- m/s</span>
+                    </div>
+                    <div class="detail-card">
+                        <span class="detail-icon">💧</span>
+                        <span class="detail-label">Umidità</span>
+                        <span id="humidity" class="detail-value">--%</span>
+                    </div>
+                    <div class="detail-card">
+                        <span class="detail-icon">🔽</span>
+                        <span class="detail-label">Pressione</span>
+                        <span id="pressure" class="detail-value">-- hPa</span>
+                    </div>
+                    <div class="detail-card">
+                        <span class="detail-icon">👁️</span>
+                        <span class="detail-label">Visibilità</span>
+                        <span id="visibility" class="detail-value">-- km</span>
+                    </div>
+                    <div class="detail-card">
+                        <span class="detail-icon">☁️</span>
+                        <span class="detail-label">Nuvole</span>
+                        <span id="clouds" class="detail-value">--%</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5-Day Forecast Section -->
+        <section class="forecast-section" id="forecastWeather" style="display: none;">
+            <h3 class="forecast-title">Previsioni 5 Giorni</h3>
+            <div class="forecast-grid" id="forecastGrid"></div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
