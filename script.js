@@ -78,46 +78,63 @@ async function getWeather(city) {
         showLoader(true);
         errorDiv.style.display = 'none';
         
-        // Ottiene le coordinate della città
-        const geoResponse = await fetch(
-            `${BASE_URL}/find?q=${city},IT&type=like&appid=${API_KEY}`
+        // Usa direttamente l'endpoint weather con il nome della città
+        const currentResponse = await fetch(
+            `${BASE_URL}/weather?q=${city},IT&units=metric&lang=it&appid=${API_KEY}`
         );
         
-        if (!geoResponse.ok) throw new Error('Errore nella ricerca');
+        console.log('Current Response Status:', currentResponse.status);
         
-        const geoData = await geoResponse.json();
-        
-        if (!geoData.list || geoData.list.length === 0) {
-            showError('Città non trovata. Prova con un\'altra città italiana.');
+        if (!currentResponse.ok) {
+            if (currentResponse.status === 404) {
+                showError('Città non trovata. Prova con un\'altra città italiana.');
+            } else if (currentResponse.status === 401) {
+                showError('Errore di autenticazione. Verifica la API key.');
+            } else {
+                showError(`Errore: ${currentResponse.status}. Riprova più tardi.`);
+            }
             showLoader(false);
             return;
         }
         
-        const { lat, lon, name } = geoData.list[0];
-        
-        // Ottiene il meteo attuale
-        const currentResponse = await fetch(
-            `${BASE_URL}/weather?lat=${lat}&lon=${lon}&units=metric&lang=it&appid=${API_KEY}`
-        );
-        
-        if (!currentResponse.ok) throw new Error('Errore nel recupero del meteo');
         const currentData = await currentResponse.json();
+        console.log('Current Data:', currentData);
+        
+        const { lat, lon, name } = currentData.coord && currentData.name ? {
+            lat: currentData.coord.lat,
+            lon: currentData.coord.lon,
+            name: currentData.name
+        } : null;
+        
+        if (!lat || !lon) {
+            showError('Impossibile ottenere le coordinate della città.');
+            showLoader(false);
+            return;
+        }
         
         // Ottiene le previsioni a 5 giorni
         const forecastResponse = await fetch(
             `${BASE_URL}/forecast?lat=${lat}&lon=${lon}&units=metric&lang=it&appid=${API_KEY}`
         );
         
-        if (!forecastResponse.ok) throw new Error('Errore nel recupero delle previsioni');
+        console.log('Forecast Response Status:', forecastResponse.status);
+        
+        if (!forecastResponse.ok) {
+            showError('Errore nel recupero delle previsioni. Riprova più tardi.');
+            showLoader(false);
+            return;
+        }
+        
         const forecastData = await forecastResponse.json();
+        console.log('Forecast Data:', forecastData);
         
         displayCurrentWeather(currentData, name);
         displayForecast(forecastData);
         
         showLoader(false);
     } catch (error) {
-        console.error('Errore:', error);
-        showError('Errore nel caricamento dei dati meteo. Riprova più tardi.');
+        console.error('Errore completo:', error);
+        showError('Errore nel caricamento dei dati meteo. Controlla la connessione e riprova.');
         showLoader(false);
     }
 }
