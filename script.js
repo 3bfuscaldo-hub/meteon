@@ -25,6 +25,32 @@ const loader = document.getElementById('loader');
 const errorDiv = document.getElementById('error');
 const currentWeatherSection = document.getElementById('currentWeather');
 const forecastWeatherSection = document.getElementById('forecastWeather');
+const homeVideoSection = document.getElementById('homeVideoSection');
+
+let map = null;
+
+// Inizializza la mappa di Fuscaldo al caricamento
+window.addEventListener('load', () => {
+    initMapFuscaldo();
+});
+
+// Inizializza la mappa di Fuscaldo
+function initMapFuscaldo() {
+    const mapElement = document.getElementById('mapFuscaldo');
+    if (mapElement && !map) {
+        map = L.map('mapFuscaldo').setView([39.3167, 15.8667], 13);
+        
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors',
+            maxZoom: 19
+        }).addTo(map);
+        
+        // Marker per Fuscaldo
+        L.marker([39.3167, 15.8667]).addTo(map)
+            .bindPopup('<strong>Fuscaldo</strong><br>Calabria, Italia')
+            .openPopup();
+    }
+}
 
 // Event Listeners
 cityInput.addEventListener('input', showSuggestions);
@@ -32,6 +58,13 @@ cityInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
         searchCity();
     }
+});
+
+// Pulisci input
+cityInput.addEventListener('blur', () => {
+    setTimeout(() => {
+        suggestionsList.innerHTML = '';
+    }, 200);
 });
 
 // Mostra i suggerimenti mentre l'utente digita
@@ -77,6 +110,7 @@ async function getWeather(city) {
     try {
         showLoader(true);
         errorDiv.style.display = 'none';
+        homeVideoSection.style.display = 'none';
         
         // Usa direttamente l'endpoint weather con il nome della città
         const currentResponse = await fetch(
@@ -93,6 +127,7 @@ async function getWeather(city) {
             } else {
                 showError(`Errore: ${currentResponse.status}. Riprova più tardi.`);
             }
+            homeVideoSection.style.display = 'block';
             showLoader(false);
             return;
         }
@@ -108,6 +143,7 @@ async function getWeather(city) {
         
         if (!lat || !lon) {
             showError('Impossibile ottenere le coordinate della città.');
+            homeVideoSection.style.display = 'block';
             showLoader(false);
             return;
         }
@@ -121,6 +157,7 @@ async function getWeather(city) {
         
         if (!forecastResponse.ok) {
             showError('Errore nel recupero delle previsioni. Riprova più tardi.');
+            homeVideoSection.style.display = 'block';
             showLoader(false);
             return;
         }
@@ -135,6 +172,7 @@ async function getWeather(city) {
     } catch (error) {
         console.error('Errore completo:', error);
         showError('Errore nel caricamento dei dati meteo. Controlla la connessione e riprova.');
+        homeVideoSection.style.display = 'block';
         showLoader(false);
     }
 }
@@ -217,8 +255,3 @@ function showError(message) {
     currentWeatherSection.style.display = 'none';
     forecastWeatherSection.style.display = 'none';
 }
-
-// Carica il meteo di Roma al caricamento della pagina
-window.addEventListener('load', () => {
-    getWeather('Roma');
-});
