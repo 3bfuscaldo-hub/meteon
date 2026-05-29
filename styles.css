@@ -51,8 +51,8 @@ body {
 }
 
 .logo-img {
-    width: 120px;
-    height: 120px;
+    width: 180px;
+    height: auto;
     filter: drop-shadow(0 5px 15px rgba(0, 102, 204, 0.3));
     animation: float 3s ease-in-out infinite;
 }
@@ -66,8 +66,8 @@ body {
     }
 }
 
-.logo {
-    font-size: 3em;
+.site-title {
+    font-size: 2.5em;
     color: var(--primary);
     margin-bottom: 10px;
     letter-spacing: 2px;
@@ -529,13 +529,12 @@ body {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .logo {
-        font-size: 2em;
+    .site-title {
+        font-size: 1.8em;
     }
 
     .logo-img {
-        width: 80px;
-        height: 80px;
+        width: 120px;
     }
 
     .video-container {
@@ -593,13 +592,12 @@ body {
         padding: 20px;
     }
 
-    .logo {
-        font-size: 1.5em;
+    .site-title {
+        font-size: 1.3em;
     }
 
     .logo-img {
-        width: 60px;
-        height: 60px;
+        width: 80px;
     }
 
     .tagline {
