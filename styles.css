@@ -44,6 +44,28 @@ body {
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
 }
 
+.logo-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.logo-img {
+    width: 120px;
+    height: 120px;
+    filter: drop-shadow(0 5px 15px rgba(0, 102, 204, 0.3));
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
 .logo {
     font-size: 3em;
     color: var(--primary);
@@ -56,6 +78,14 @@ body {
     font-size: 1.1em;
     color: var(--secondary);
     font-weight: 300;
+    margin-bottom: 5px;
+}
+
+.tagline-sub {
+    font-size: 0.9em;
+    color: var(--primary);
+    font-weight: 600;
+    letter-spacing: 1px;
 }
 
 /* Search Container */
@@ -176,8 +206,8 @@ body {
     font-weight: 500;
 }
 
-/* Video Section */
-.video-section {
+/* Home Video Section */
+.home-video-section {
     animation: fadeIn 0.6s ease;
     margin-bottom: 40px;
 }
@@ -188,6 +218,7 @@ body {
     border-radius: var(--border-radius);
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
     text-align: center;
+    margin-bottom: 30px;
 }
 
 .video-title {
@@ -240,6 +271,38 @@ body {
     50% {
         transform: translateY(-10px);
     }
+}
+
+/* Map Container */
+.map-container {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 40px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    animation: slideUp 0.6s ease;
+}
+
+.map-title {
+    font-size: 1.8em;
+    color: var(--primary);
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.map {
+    width: 100%;
+    height: 400px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+}
+
+.map-info {
+    text-align: center;
+    color: #666;
+    font-size: 1.1em;
+    font-weight: 500;
+    margin-top: 15px;
 }
 
 /* Weather Section */
@@ -470,6 +533,11 @@ body {
         font-size: 2em;
     }
 
+    .logo-img {
+        width: 80px;
+        height: 80px;
+    }
+
     .video-container {
         padding: 25px;
     }
@@ -480,6 +548,14 @@ body {
 
     .video-subtitle {
         font-size: 0.95em;
+    }
+
+    .map-container {
+        padding: 25px;
+    }
+
+    .map {
+        height: 300px;
     }
 
     .weather-main {
@@ -521,6 +597,11 @@ body {
         font-size: 1.5em;
     }
 
+    .logo-img {
+        width: 60px;
+        height: 60px;
+    }
+
     .tagline {
         font-size: 0.9em;
     }
@@ -531,6 +612,14 @@ body {
 
     .video-title {
         font-size: 1.3em;
+    }
+
+    .map-container {
+        padding: 20px;
+    }
+
+    .map {
+        height: 250px;
     }
 
     .current-weather {
